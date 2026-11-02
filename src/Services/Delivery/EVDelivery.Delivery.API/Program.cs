@@ -67,11 +67,8 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<DeliveryDbContext>();
-        if (context.Database.IsRelational())
-        {
-            context.Database.EnsureCreated();
-            await DeliveryDbSeeder.SeedAsync(context, logger);
-        }
+        context.Database.EnsureCreated();
+        await DeliveryDbSeeder.SeedAsync(context, logger);
     }
     catch (Exception ex)
     {

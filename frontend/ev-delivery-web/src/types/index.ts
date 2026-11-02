@@ -12,51 +12,119 @@ export type VehicleStatus =
   | 'ReadyForDelivery'
   | 'DeliveryScheduled'
   | 'DeliveryInProgress'
-  | 'Delivered';
+  | 'Delivered'
+  | 'ORDERED'
+  | 'VIN_ASSIGNED'
+  | 'IN_TRANSIT'
+  | 'RECEIVED'
+  | 'INSPECTION'
+  | 'PREPARATION'
+  | 'READY_FOR_DELIVERY'
+  | 'DELIVERY_SCHEDULED'
+  | 'DELIVERY_IN_PROGRESS'
+  | 'DELIVERED';
 
 export interface BatteryInfo {
   capacityKwh: number;
   rangeKm: number;
   chargingSpeedKw: number;
+  healthSohPercentage?: number;
+  temperatureCelsius?: number;
+  voltageVolts?: number;
 }
 
 export interface VehicleStatusHistoryEntry {
   id: string;
-  status: VehicleStatus;
+  status: VehicleStatus | string;
   changedAt: string;
   changedBy: string;
   notes?: string;
 }
 
+export interface VehicleRevision {
+  id: string;
+  revisionNumber: number;
+  name: string;
+  recommendedKm: number;
+  performedKm?: number;
+  performedAt?: string;
+  technicianName?: string;
+  isCompleted: boolean;
+  notes?: string;
+  checklistPassedCount: number;
+  checklistTotalCount: number;
+}
+
+export interface VehicleChassisInfo {
+  platform: string; // e.g., "e-Platform 3.0 Evo"
+  architecture: string; // e.g., "CTB (Cell-to-Body) 800V"
+  motorConfiguration: string; // e.g., "Dual-Motor AWD (Dianteiro + Traseiro 530cv)"
+  suspensionType: string; // e.g., "BYD DiSus Intelligent Body Control"
+  brakes: string; // e.g., "Discos Ventilados Brembo com Recuperação Regenerativa CRBS"
+  chassisVinMatch: boolean;
+  batteryCellTechnology: string; // e.g., "LFP Blade Battery Ultra-Segura"
+  curbWeightKg: number;
+  maxTowingKg?: number;
+}
+
 export interface Vehicle {
   id: string;
   vin: string;
-  make: string;
+  brand?: string;
+  make?: string;
   model: string;
   year: number;
   color: string;
-  trimLevel: string;
+  version?: string;
+  trimLevel?: string;
   licensePlate?: string;
-  status: VehicleStatus;
-  batteryInfo: BatteryInfo;
-  odometer: number;
+  status: VehicleStatus | string;
+  batteryInfo?: BatteryInfo;
+  batteryCapacityKwh?: number;
+  batteryLevelPercentage?: number;
+  estimatedRangeKm?: number;
+  odometer?: number;
+  odometerKm?: number;
+  location?: string;
+  deliveryCenter?: string;
   imageUrl?: string;
+  category?: 'Ocean' | 'Dynasty' | 'Yangwang' | 'Fangchengbao' | 'Lançamentos' | string;
   createdAt: string;
   updatedAt: string;
-  statusHistory: VehicleStatusHistoryEntry[];
+  statusHistory?: VehicleStatusHistoryEntry[];
+  history?: Array<{
+    id: string;
+    vehicleId: string;
+    fromStatus: string;
+    toStatus: string;
+    changedAt: string;
+    changedBy: string;
+    notes?: string;
+  }>;
+  revisions?: VehicleRevision[];
+  chassisInfo?: VehicleChassisInfo;
 }
 
 export interface VehicleSummary {
   id: string;
   vin: string;
-  make: string;
+  brand?: string;
+  make?: string;
   model: string;
   year: number;
   color: string;
-  trimLevel: string;
+  version?: string;
+  trimLevel?: string;
   licensePlate?: string;
-  status: VehicleStatus;
-  odometer: number;
+  status: VehicleStatus | string;
+  odometer?: number;
+  odometerKm?: number;
+  batteryCapacityKwh?: number;
+  batteryLevelPercentage?: number;
+  estimatedRangeKm?: number;
+  location?: string;
+  deliveryCenter?: string;
+  imageUrl?: string;
   createdAt: string;
 }
 
@@ -65,32 +133,48 @@ export interface VehicleSummary {
 // ============================================================
 
 export interface Address {
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
+  street?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  postalCode?: string;
+  country?: string;
 }
 
 export interface Customer {
   id: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  fullName?: string;
   email: string;
   phone: string;
-  address: Address;
+  street?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+  country?: string;
+  documentNumber?: string;
+  address?: Address;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export interface CustomerSummary {
   id: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  fullName?: string;
   email: string;
   phone: string;
+  street?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+  country?: string;
+  documentNumber?: string;
+  createdAt?: string;
 }
 
 // ============================================================

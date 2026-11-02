@@ -68,11 +68,8 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<VehicleDbContext>();
         // EnsureCreated or Migrate depending on whether relational DB is online
-        if (context.Database.IsRelational())
-        {
-            context.Database.EnsureCreated();
-            await VehicleDbSeeder.SeedAsync(context, logger);
-        }
+        context.Database.EnsureCreated();
+        await VehicleDbSeeder.SeedAsync(context, logger);
     }
     catch (Exception ex)
     {

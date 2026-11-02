@@ -1,30 +1,182 @@
-# .NET
-bin/
-obj/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-.vs/
-_ReSharper*/
+# ============================================================
+#  EVDeliveryManagement – .gitignore
+#  .NET  |  React/TypeScript  |  Node/npm  |  Docker  |  DB
+#  🔒  Security: credentials, secrets, certificates
+# ============================================================
 
-# Node & Frontend
+# ────────────────────────────────────────────
+#  🔒  SECURITY – Credentials & Secrets
+# ────────────────────────────────────────────
+# Environment files (may contain DB strings, API keys, JWT secrets)
+.env
+.env.*
+!.env.example
+
+# npm / yarn / pnpm auth tokens
+.npmrc
+.yarnrc
+.pnpmrc
+
+# Certificates & keys
+*.pfx
+*.p12
+*.pem
+*.key
+*.rsa
+*.cer
+*.crt
+*.jks
+*.keystore
+
+# Secret / credential files
+**/secrets/
+**/credentials/
+*secret*.json
+*credential*.json
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+appsettings.Local.json
+
+# Azure / AWS / GCP service accounts
+*.publishsettings
+*.azureauth
+service-account*.json
+
+# ────────────────────────────────────────────
+#  .NET / C#
+# ────────────────────────────────────────────
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userossscache
+*.sln.docstates
+*.csproj.user
+launchSettings.json
+
+# NuGet
+**/packages/
+*.nupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# MSBuild
+*.cache
+project.lock.json
+project.fragment.lock.json
+
+# Rider / ReSharper
+_ReSharper*/
+*.DotSettings.user
+.idea/
+
+# Code coverage / test results
+**/TestResults/
+**/coverage/
+*.coverage
+*.coveragexml
+*.trx
+
+# ────────────────────────────────────────────
+#  React / TypeScript / Vite (Frontend)
+# ────────────────────────────────────────────
 node_modules/
 dist/
+build/
 .vite/
 *.local
+*.tsbuildinfo
 
-# Environment & Secrets
-.env
-.env.local
-.env.production
-*.pfx
-*.rsa
+# ESLint / Prettier cache
+.eslintcache
+.prettiercache
 
-# Logs & OS
-*.log
-.DS_Store
-Thumbs.db
+# Storybook
+storybook-static/
 
-# Docker
+# ────────────────────────────────────────────
+#  npm / yarn / pnpm
+# ────────────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# ────────────────────────────────────────────
+#  Databases
+# ────────────────────────────────────────────
+# SQLite
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# SQL Server (LocalDB / Express)
+*.mdf
+*.ldf
+*.ndf
+
+# PostgreSQL
+*.dump
+*.sql.gz
+
+# Backups
+*.bak
+*.bkp
+
+# ────────────────────────────────────────────
+#  Docker
+# ────────────────────────────────────────────
 docker-compose.override.yml
+docker-compose.local.yml
+.docker/
+
+# ────────────────────────────────────────────
+#  OS & Editor
+# ────────────────────────────────────────────
+# macOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# VSCode (keep settings, ignore history/extensions)
+.vscode/settings.json
+.vscode/launch.json
+!.vscode/extensions.json
+
+# ────────────────────────────────────────────
+#  Logs
+# ────────────────────────────────────────────
+*.log
+logs/
+
+# ────────────────────────────────────────────
+#  Misc
+# ────────────────────────────────────────────
+*.tmp
+*.temp
+*.swp
+*.swo
+*.orig
+*.bak

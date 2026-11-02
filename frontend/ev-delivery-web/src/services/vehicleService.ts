@@ -24,16 +24,51 @@ export const vehicleApi = {
 
   create: async (payload: {
     vin: string
-    make: string
+    brand?: string
+    make?: string
     model: string
     year: number
     color: string
-    trimLevel: string
-    capacityKwh: number
-    rangeKm: number
-    chargingSpeedKw: number
+    version?: string
+    trimLevel?: string
+    batteryCapacityKwh?: number
+    capacityKwh?: number
+    batteryLevelPercentage?: number
+    estimatedRangeKm?: number
+    rangeKm?: number
+    odometerKm?: number
+    odometer?: number
+    licensePlate?: string
+    location?: string
+    deliveryCenter?: string
+    imageUrl?: string
   }): Promise<Vehicle> => {
-    const { data } = await api.post('/vehicles', payload)
+    const brand = payload.brand || payload.make || 'BYD'
+    const version = payload.version || payload.trimLevel || 'Standard'
+    const batteryCapacityKwh = payload.batteryCapacityKwh ?? payload.capacityKwh ?? 82.5
+    const batteryLevelPercentage = payload.batteryLevelPercentage ?? 100
+    const estimatedRangeKm = payload.estimatedRangeKm ?? payload.rangeKm ?? 450
+    const odometerKm = payload.odometerKm ?? payload.odometer ?? 5.0
+
+    const body = {
+      vin: payload.vin,
+      brand,
+      model: payload.model,
+      version,
+      year: payload.year,
+      color: payload.color,
+      batteryCapacityKwh,
+      batteryLevelPercentage,
+      estimatedRangeKm,
+      odometerKm,
+      licensePlate: payload.licensePlate || null,
+      location: payload.location || 'Centro de Distribuição Principal',
+      deliveryCenter: payload.deliveryCenter || 'São Paulo - SP',
+      imageUrl: payload.imageUrl || `/vehicles/byd_${payload.model.toLowerCase().replace(/\s+/g, '_')}.png`,
+      initialStatus: 'ORDERED',
+      createdBy: 'Operador DiLink'
+    }
+    const { data } = await api.post('/vehicles', body)
     return data
   },
 }

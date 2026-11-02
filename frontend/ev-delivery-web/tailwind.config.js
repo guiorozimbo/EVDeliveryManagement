@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -15,13 +16,17 @@ export default {
           700: '#1d4ed8',
           900: '#1e3a8a',
         },
-        brand: {
+        byd: {
+          obsidian: '#080b11',
+          surface: '#0f172a',
+          elevated: '#1e293b',
+          cyan: '#00f2fe',
+          blade: '#10b981',
           blue: '#1b5299',
-          lightblue: '#4a90d9',
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
     },
   },
